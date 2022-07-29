@@ -5,11 +5,14 @@ import java.util.Objects;
 
 public final class Card implements Comparable<Card> {
 
+  private static final Comparator<Card> NATURAL_ORDER_COMPARATOR = Comparator
+      .comparing(Card::getSuit)
+      .thenComparing(Card::getRank);
+
   private final Rank rank;
   private final Suit suit;
   private final String representation;
   private final int hash;
-
 
   public Card(Rank rank, Suit suit) {
     this.rank = rank;
@@ -45,8 +48,6 @@ public final class Card implements Comparable<Card> {
     return result;
   }
 
-
-
   @Override
   public String toString() {
     return representation;
@@ -54,12 +55,7 @@ public final class Card implements Comparable<Card> {
 
   @Override
   public int compareTo(Card other) {
-   return Comparator
-        .comparing(Card::getSuit)
-        .thenComparing(Card:: getRank)
-        .compare(this, other);
+    return NATURAL_ORDER_COMPARATOR.compare(this, other);
   }
+
 }
-
-
-
